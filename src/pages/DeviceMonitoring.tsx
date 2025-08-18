@@ -11,6 +11,7 @@ import {TankBadge} from '../components/module/TankBadge';
 import TabBtn from '../components/ui/TabBtn';
 import ImgTankDevice from '../assets/imgs/tank-device.png';
 import { IconDo, IconTemp, IconPsu, IconPh } from '../assets/icons';
+import PageTitle from "../components/module/PageTitle.tsx";
 
 export default function DeviceMonitoring() {
   const [enabled, setEnabled] = useState(true);
@@ -22,22 +23,22 @@ export default function DeviceMonitoring() {
   const [valve6, setValve6] = useState<'ON'|'OFF'>('ON');
   const [valve7, setValve7] = useState<'ON'|'OFF'>('ON');
   return (
-    <section className="flex flex-col items-stretch mx-auto px-4 lg:px-6">
-      <h2 className="flex justify-between items-center py-2 lg:py-4 text-xl lg:text-2xl font-bold text-indigo-500">장비 제어 모니터링</h2>
+    <section className="flex flex-col items-stretch mx-auto px-6">
+      <PageTitle title="장비제어 모니터링" />
       <div className="flex flex-col">
         <div className="flex flex-col lg:flex-row items-center justify-between border-b border-b-slate-700">
-          <h3 className="flex justify-start items-center gap-2 w-full lg:w-auto h-12 lg:h-16">
+          <h3 className="flex justify-start items-center gap-2 w-full lg:w-auto h-12 xl:h-16">
             <MapPin size={24} className="text-indigo-300"/>
-            <p className="text-lg lg:text-xl font-bold">2 고가수조 <span>(RAS-A-00023)</span></p>
+            <p className="text-lg xl:text-xl font-bold">2 고가수조 <span>(RAS-A-00023)</span></p>
           </h3>
-          <div className="flex justify-end items-stretch h-12 lg:h-16 w-full lg:w-auto">
+          <div className="flex justify-end items-stretch h-12 xl:h-16 w-full lg:w-auto">
             <TabBtn text="제어 화면" className="grow" active />
             <TabBtn text="제어 이력" className="grow" />
           </div>
         </div>
-        <div className="flex items-stretch lg:justify-between lg:gap-28 py-8 lg:py-10">
-          <div className="flex flex-col shrink-0 w-full lg:w-80 gap-6 lg:gap-8">
-            <div className="flex items-center justify-between w-full min-h-14 p-4 rounded-2xl border border-indigo-300">
+        <div className="flex items-start lg:justify-between grow lg:gap-8 xl:gap-28 py-6 xl:py-10">
+          <div className="flex flex-col shrink-0 w-full lg:w-72 xl:w-80 lg:h-full gap-4 xl:gap-8 lg:scroll-auto">
+            <div className="flex items-center justify-between w-full h-12 xl:h-14 p-4 rounded-2xl border border-indigo-300">
               <strong className="text-indigo-300 font-bold">인공지능 모드</strong>
               <Switch checked={enabled} onChange={setEnabled} />
             </div>
@@ -47,7 +48,7 @@ export default function DeviceMonitoring() {
                 <StatusChip variant="red" text="위험" />
               </div>
               }>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-2 xl:gap-4">
                 <TankStatusItem
                   title="온도"
                   icon={<IconTemp className="size-6 text-slate-300" />}
@@ -79,7 +80,7 @@ export default function DeviceMonitoring() {
               </div>
             </MonitoringSection>
             <MonitoringSection title="드럼필터/포말관리기 상태">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2 xl:gap-4">
                 <DeviceStatusItem
                   title="드럼필터 오염도"
                   condition={
@@ -101,7 +102,7 @@ export default function DeviceMonitoring() {
               </div>
             </MonitoringSection>
             <MonitoringSection title="생물학적 여과조 상태">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2 xl:gap-4">
                 <TankStatusItem
                   title="아질산 수치"
                   icon={<IconPsu className="size-6 text-slate-300" />}
@@ -113,7 +114,7 @@ export default function DeviceMonitoring() {
               </div>
             </MonitoringSection>
             <MonitoringSection title="밸브 제어" className="lg:hidden">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2 xl:gap-4">
                 <div className="flex items-center gap-2 text-indigo-200">
                   <Loader size={18} className="animate-spin" />
                   <p>인공지능 모드로 제어중 입니다.</p>
@@ -179,7 +180,7 @@ export default function DeviceMonitoring() {
             </div>
             <img src={ImgTankDevice} alt="Tank Device" className="w-full"/>
             <TankBadge
-              top="top-[60%]" left="left-[14%]"
+              top="top-[60%]" left="left-[10%]"
               label="수온제어"
               value="15"
               unit="℃"
@@ -197,7 +198,7 @@ export default function DeviceMonitoring() {
               onToggle={(next) => setValve2(next)}
             />
             <TankBadge
-              top="top-[74%]" left="left-[36%]"
+              top="top-[74%]" left="left-[40%]"
               label="pH제어"
               value="15"
               unit="pH"
@@ -206,7 +207,7 @@ export default function DeviceMonitoring() {
               onToggle={(next) => setValve3(next)}
             />
             <TankBadge
-              top="top-[81%]" left="left-[48%]"
+              top="top-[81%]" left="left-[55%]"
               label="염분제어"
               value="15"
               unit="PSU"

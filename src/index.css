@@ -23,3 +23,7 @@
 
 	#root { @apply w-full; }
 }
+
+@keyframes dash-rotate {
+	to { stroke-dashoffset: -1; } /* 항상 한 바퀴 */
+}

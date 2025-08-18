@@ -14,7 +14,7 @@ export default function App() {
   }, [page]);
 
   return (
-    <div className="flex flex-col min-w-full min-h-screen p-0 lg:py-6 lg:px-10 gap-4">
+    <div className="flex flex-col w-dvw h-dvh p-0 xl:py-6 xl:px-6 2xl:px-10 gap-4">
       <Header current={page} onChange={setPage} />
       <div className="grow">
         {Current}

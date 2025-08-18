@@ -15,14 +15,14 @@ interface TankStatusItemProps {
 export default function TankStatusItem({ title, icon, value, unit, valueColor='green', variant='column', deviceStatus, onToggle, aiMode =true }: TankStatusItemProps) {
   const isOn = deviceStatus === 'ON';
   return (
-    <div className={`flex ${variant === 'column' ? 'flex-col' : 'justify-between'} gap-2 bg-slate-800 rounded-2xl p-4`}>
+    <div className={`flex ${variant === 'column' ? 'flex-col' : 'justify-between'} gap-2 bg-slate-800 rounded-2xl p-3 xl:p-4`}>
       <div className="flex items-center justify-between">
         <strong>{title}</strong>
         {variant === 'column' && icon}
       </div>
       {variant === 'column' ? (
         <div className={`flex items-center justify-center w-full rounded-lg ${valueColor === 'red' ? 'bg-rose-500/20 text-rose-500' : 'bg-green-500/20 text-green-500'}`}>
-          <p className="font-bold text-2xl">{value}<span className="text-lg">{unit}</span></p>
+          <p className="font-bold text-xl xl:text-2xl">{value}<span className="text-base xl:text-lg">{unit}</span></p>
         </div>
       ) : (
         <div className="flex gap-4 items-center">
