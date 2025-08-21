@@ -10,4 +10,7 @@ export default defineConfig({
     tailwindcss(),
     svgr()
   ],
+  server: {
+    host: true,        // 0.0.0.0로 바인딩
+  },
 })

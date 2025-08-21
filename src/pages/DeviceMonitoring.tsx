@@ -1,5 +1,6 @@
 import {useState} from "react";
 import { MapPin, Loader } from 'lucide-react';
+import Container from '../components/layout/Container';
 import Switch from '../components/ui/Switch';
 import TankStatusItem from '../components/module/TankStatusItem';
 import DeviceStatusItem from '../components/module/DeviceStatusItem';
@@ -23,7 +24,7 @@ export default function DeviceMonitoring() {
   const [valve6, setValve6] = useState<'ON'|'OFF'>('ON');
   const [valve7, setValve7] = useState<'ON'|'OFF'>('ON');
   return (
-    <section className="flex flex-col items-stretch mx-auto px-6">
+    <Container>
       <PageTitle title="장비제어 모니터링" />
       <div className="flex flex-col">
         <div className="flex flex-col lg:flex-row items-center justify-between border-b border-b-slate-700">
@@ -239,6 +240,6 @@ export default function DeviceMonitoring() {
           </div>
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

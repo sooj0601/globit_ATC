@@ -1,5 +1,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 @import "tailwindcss";
+@import "react-datepicker/dist/react-datepicker.css";
+
 
 :root {
 	font-family: 'Pretendard', system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -26,4 +28,20 @@
 
 @keyframes dash-rotate {
 	to { stroke-dashoffset: -1; } /* 항상 한 바퀴 */
+}
+
+
+/* React Datepicker */
+.react-datepicker {
+	font-size: var(--text-sm) !important;
+	border-radius: var(--radius-xl) !important;
+	overflow: hidden !important;
+	border-color: var(--color-slate-300) !important;
+}
+.react-datepicker__header {
+	background-color: var(--color-slate-100) !important;
+	border-bottom: none !important;
+}
+.react-datepicker__triangle {
+	display: none !important;
 }
