@@ -20,11 +20,17 @@ export default function CustomBadge({
 
   let variantClass = '';
   switch (variant) {
+    case 'default':
+      variantClass = 'bg-slate-300/20 text-slate-300';
+      break;
     case 'yellow' :
       variantClass = 'bg-yellow-400/20 text-yellow-400';
       break;
     case 'teal' :
       variantClass = 'bg-teal-400/20 text-teal-400';
+      break;
+    case 'green' :
+      variantClass = 'bg-green-400/20 text-green-400';
       break;
   }
 

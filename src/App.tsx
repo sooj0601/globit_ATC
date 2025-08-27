@@ -3,12 +3,14 @@ import type { Page } from "./types";
 import Header from "./components/layout/Header.tsx";
 import TankMonitoring from "./pages/TankMonitoring";
 import DeviceMonitoring from "./pages/DeviceMonitoring";
+import DeviceHistory from "./pages/DeviceHistory";
 import FeedSupplySetting from "./pages/FeedSupplySetting";
 import FeedSupplyHistory from "./pages/FeedSupplyHistory";
 
 const pages: Record<Page, ReactNode> = {
   tankMonitoring: <TankMonitoring />,
   deviceMonitoring: <DeviceMonitoring />,
+  deviceHistory: <DeviceHistory />,
   feedSupplySetting: <FeedSupplySetting />,
   feedSupplyHistory: <FeedSupplyHistory />,
 };
