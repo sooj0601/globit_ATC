@@ -7,7 +7,8 @@ import CustomDateInput from './CustomDateInput';
 type InputProps = {
   type?: string;
   name?: string;
-  value?: string;
+  value?: string;               // ← 컨트롤드 값
+  defaultValue?: string;        // ← 언컨트롤드 초기값
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
@@ -17,36 +18,38 @@ type InputProps = {
   inputStyle?: string;
   onClick?: () => void;
   unit?: string;
-  number?: boolean;
+  number?: boolean;             // 숫자 입력 모드(쉼표 포함 허용)
   id?: string;
   required?: boolean;
   autoComplete?: string;
 };
 
 const Input: React.FC<InputProps> = ({
-    type = 'text',
-    name,
-    value,
-    placeholder,
-    onChange,
-    disabled = false,
-    readOnly = false,
-    error,
-    className = '',
-    inputStyle = '',
-    onClick,
-    unit,
-    number = false,
-    id,
-    required = false,
-    autoComplete = 'off',
-  }) => {
+                                       type = 'text',
+                                       name,
+                                       value,
+                                       defaultValue,
+                                       placeholder,
+                                       onChange,
+                                       disabled = false,
+                                       readOnly = false,
+                                       error,
+                                       className = '',
+                                       inputStyle = '',
+                                       onClick,
+                                       unit,
+                                       number = false,
+                                       id,
+                                       required = false,
+                                       autoComplete = 'off',
+                                     }) => {
   const [showPassword, setShowPassword] = useState(false);
   const isPassword = type === 'password';
   const isSearch = type === 'search';
   const isFile = type === 'file';
   const isDate = type === 'date';
   const hasRightElement = isPassword || !!unit || isSearch;
+
   const toDateString = (date: Date): string => {
     const year = date.getFullYear();
     const month = `${date.getMonth() + 1}`.padStart(2, '0');
@@ -54,18 +57,7 @@ const Input: React.FC<InputProps> = ({
     return `${year}-${month}-${day}`;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (number) {
-      const numeric = e.target.value;
-      if (/^\d*$/.test(numeric)) {
-        onChange?.(e);
-      }
-    } else {
-      onChange?.(e);
-    }
-  };
-
-  const parseDate = (str: string): Date | null => {
+  const parseDate = (str: string | undefined): Date | null => {
     if (!str) return null;
     const parts = str.split('-');
     if (parts.length !== 3) return null;
@@ -74,6 +66,19 @@ const Input: React.FC<InputProps> = ({
     return isNaN(date.getTime()) ? null : date;
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (number) {
+      // 숫자 + 쉼표만 허용
+      const raw = e.target.value;
+      if (/^[\d,]*$/.test(raw)) {
+        onChange?.(e);
+      }
+    } else {
+      onChange?.(e);
+    }
+  };
+
+  // 파일 입력
   if (isFile) {
     return (
       <div className={`relative flex flex-col gap-1 ${className}`}>
@@ -94,15 +99,17 @@ const Input: React.FC<InputProps> = ({
     );
   }
 
+  // 날짜 입력(ReactDatePicker 사용)
   if (isDate) {
+    const selected = parseDate(value ?? defaultValue);
     return (
       <div className={`flex flex-col z-[9999] ${className}`}>
         <ReactDatePicker
-          selected={parseDate(value || '')}
+          selected={selected}
           onChange={(date) => {
-            const value = date ? toDateString(date) : '';
+            const v = date ? toDateString(date) : '';
             const fakeEvent = {
-              target: { name, value },
+              target: { name, value: v },
             } as unknown as React.ChangeEvent<HTMLInputElement>;
             onChange?.(fakeEvent);
           }}
@@ -112,6 +119,9 @@ const Input: React.FC<InputProps> = ({
               id={id}
               placeholder={placeholder}
               inputStyle={`${inputStyle} ${className || ''}`}
+              disabled={disabled}
+              readOnly={readOnly}
+              required={required}
             />
           }
           dateFormat="yyyy-MM-dd"
@@ -123,14 +133,15 @@ const Input: React.FC<InputProps> = ({
     );
   }
 
-
+  // 일반 입력
   return (
     <div className={`flex flex-col gap-1 ${className}`}>
       <div className={`relative flex flex-col gap-1`}>
         <input
           type={isPassword && showPassword ? 'text' : type}
           name={name}
-          value={value}
+          // 컨트롤드/언컨트롤드 둘 다 지원
+          {...(value !== undefined ? { value } : { defaultValue })}
           placeholder={placeholder}
           onChange={handleChange}
           onClick={onClick}
@@ -140,11 +151,17 @@ const Input: React.FC<InputProps> = ({
           id={id}
           required={required}
           autoComplete={autoComplete}
-          className={`w-full h-9 ${hasRightElement ? (unit?.length === 2 ? 'pr-8' : 'pr-6') : 'pr-2'} pl-2 rounded-lg outline-none transition-all
+          className={`w-full h-9 ${
+            hasRightElement ? (unit?.length === 2 ? 'pr-8' : 'pr-6') : 'pr-2'
+          } pl-2 rounded-lg outline-none transition-all
             ${error ? 'bg-rose-500/10' : ''}
-            ${disabled ? 'cursor-not-allowed text-slate-400 bg-slate-100'
-            : readOnly ? 'bg-white/4 border border-slate-600 font-bold'
-              : 'bg-white/8 '}
+            ${
+            disabled
+              ? 'cursor-not-allowed text-slate-400 bg-slate-100'
+              : readOnly
+                ? 'bg-white/4 border border-slate-600 font-bold'
+                : 'bg-white/8 '
+          }
             ${number ? 'text-right' : ''}
             ${inputStyle}`}
         />
