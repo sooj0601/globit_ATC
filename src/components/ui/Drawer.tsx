@@ -58,15 +58,14 @@ export default function Drawer({
     if (open && panelRef.current) panelRef.current.focus();
   }, [open]);
 
-  // 슬라이드 트랜지션 클래스
   const translateClosed = useMemo(() => {
     switch (actualSide) {
       case "right":
-        return "translate-x-full";
+        return "translate-x-[calc(100%+1.5rem)]";   // ← 기존: translate-x-full
       case "left":
-        return "-translate-x-full";
+        return "-translate-x-[calc(100%+1.5rem)]";  // ← 기존: -translate-x-full
       case "top":
-        return "-translate-y-full";
+        return "-translate-y-full";                 // top/bottom은 현재 여백 없음
       case "bottom":
         return "translate-y-full";
     }
